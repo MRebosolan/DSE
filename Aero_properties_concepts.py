@@ -24,8 +24,13 @@ altitude = 11000
 M = 0.8
 
 
+W_start_blended_jet = 31537
+W_end_blended_jet = 29146
+S_blended_jet = 200
 
-#fuckthepolice
+AR_blended_jet = wingspan**2/S_blended_jet
+taper_blended_jet = 0.2
+quarter_sweep_blended_jet = 25
 
 def atmosphere_calculator(h):
     T_grad = -0.0065
@@ -36,9 +41,9 @@ def atmosphere_calculator(h):
     return (T,P,rho,a)
 
 
-def CLdes(q,W_start_cruise,W_end_cruise,S,sweep): #finds design cruise CL for aircraft and airfoil
+def CLdes(q,W_start_cruise,W_end_cruise,S,quarter_sweep): #finds design cruise CL for aircraft and airfoil
     CL = 1.1/q * (0.5 * (W_start_cruise/S + W_end_cruise/S))
-    cl = CL/(cos(radians(sweep)))**2
+    cl = CL/(cos(radians(quarter_sweep)))**2
     return CL, cl
 
 def MAC (chord_r,taper):
@@ -70,7 +75,7 @@ def any_sweep(quarter_sweep, AR,taper, chord_position):
     any_sweep = np.tan(quarter_sweep) - (4/AR)*((0.5-chord_position)*(1-taper)/(1+taper))
     return any_sweep
 
-def CL_alpha (AR, M, half_sweep, taper = taper):
+def CL_alpha (AR, M, half_sweep, taper):
     eff = 0.95
     b = beta(M)
     half_sweep = half_sweep(quarter_sweep, AR, taper)
@@ -78,13 +83,13 @@ def CL_alpha (AR, M, half_sweep, taper = taper):
     return 2*np.pi*AR/(2+x)
    
     
-def approxCLmax (clmax, quarter_sweep = quarter_sweep):
+def approxCLmax (clmax, quarter_sweep):
     return 0.9 * clmax *radians(quarter_sweep)
 
 def c1_(taper):
     return  -4.2447*taper**4 +12.611*taper**3 - 12.8418 * taper**2 +4.50475*taper
 
-def datcom( quarter_sweep = quarter_sweep, AR = AR, taper = taper):
+def datcom( quarter_sweep, AR, taper = taper):
     c1 = c1_(taper)
     LEsweep = any_sweep(quarter_sweep, AR,taper, 0.25)
     a = 4/((c1+1)*cos(LEsweep))
@@ -98,8 +103,10 @@ def datcom( quarter_sweep = quarter_sweep, AR = AR, taper = taper):
 
 
 
-# def CLclmax (quarter_sweep, AR, taper, delta_y):
-    
+def CLclmax (quarter_sweep, AR, taper):
+    print("look at page 17 in adsee 2 summary, figure 2.3, if you want to fill in a new value")
+    return 0.9
+
           
 q = dynamic_pressure(M, altitude)
 
@@ -111,3 +118,11 @@ CL,cl = CLdes(q,W_start_cruise,W_end_cruise,S,quarter_sweep)
 crjCL, crjcl = CLdes(q,W_start_cruise_crj,W_end_cruise_crj,S_crj,quarter_sweep_crj)
 
 CL_alpha = CL_alpha (AR, M, half_sweep, taper )
+
+
+
+# High lift devices
+
+target_deltaCLmax = 1.0 #very big estimate!!!
+available_wingarea = 0.7 #% of the wing area can be reference wing flapped surface
+
