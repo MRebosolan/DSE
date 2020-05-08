@@ -1,5 +1,8 @@
 from math import cos, radians
 
+
+#fuckthepolice
+
 def atmosphere_calculator(h):
     T_grad = -0.0065
     T = 288.15 + T_grad*h
