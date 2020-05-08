@@ -11,13 +11,12 @@ def atmosphere_calculator(h):
 
 class wing:
 
-    def __init__(self, sweep, W_start_cruise, W_end_cruise, S, chord_t, chord_r, wingspan):
+    def __init__(self, sweep, W_start_cruise, W_end_cruise, S, taper, wingspan):
         self.sweep = sweep
         self.W_start_cruise = W_start_cruise
         self.W_end_cruise = W_end_cruise
         self.S = S
-        self.chord_t = chord_t
-        self.chord_r = chord_r
+        self.taper = taper
         self.wingspan = wingspan
 
 
@@ -27,11 +26,6 @@ class wing:
         self.CL = CL
         self.cl = cl
 
-
-
-    def taper (self, chord_r, chord_t):
-        self.taper = chord_t/chord_r
-
     def MAC (self, taper, chord_r):
         MAC = (2/3)*chord_r*((1+taper+taper**2)/(1+taper))
         self.MAC = MAC
@@ -40,5 +34,11 @@ class wing:
         self.chord_r = (2*S)/(wingspan*(1+taper))
         self.chord_t = self.chord_r * taper
 
-
-blendedwing = wing(sweep, q, )
+sweep = 25
+wingspan = 24
+W_start_cruise = 31537
+W_end_cruise = 28337
+taper = 0.4
+S = 70.6 #crj
+blendedwing = wing(sweep, W_start_cruise, W_end_cruise, S, taper, wingspan )
+print(blendedwing.)
