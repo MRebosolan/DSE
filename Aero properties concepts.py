@@ -39,3 +39,6 @@ class wing:
     def root_chord_tip_chord(self, S, wingspan, taper):
         self.chord_r = (2*S)/(wingspan*(1+taper))
         self.chord_t = self.chord_r * taper
+
+
+blendedwing = wing(sweep, q, )
