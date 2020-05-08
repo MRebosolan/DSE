@@ -24,6 +24,11 @@ def root_chord_tip_chord(S,wingspan, taper):
     chord_t = chord_r * taper
     return chord_r,chord_t
 
+def dynamic_pressure(rho, a, M):
+    V = M * a
+    return 0.5 * rho * V**2
+
+
 sweep = 25
 wingspan = 24
 W_start_cruise = 31537
