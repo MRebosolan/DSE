@@ -121,8 +121,33 @@ CL_alpha = CL_alpha (AR, M, half_sweep, taper )
 
 
 
-# High lift devices
+#initial drag estimate:
+def reynolds (rho, V, l, mu, k): #subsonic
+    std = rho*V*l/mu
+    adapted = 38.21*((l/k)**1.053)
+    return min(std,adapted)
 
-target_deltaCLmax = 1.0 #very big estimate!!!
-available_wingarea = 0.7 #% of the wing area can be reference wing flapped surface
+def laminar_friction(re):
+    return 1.328/(math.sqrt(re))
+
+def turbulent (re, M):
+    lower = ((math.log(re))**2.58) *(1 + 0.144 * M*M)**0.65
+    return 0.455/lower
+
+
+def formfactor_wing (t_over_c, x_over_c, M, quarter_sweep, AR,taper):
+		return (1+ 0.6*t_over_c/x_over_c+ 100*(t_over_c**4)) * (1.34*(M**0.18)*(cos(any_sweep(quarter_sweep, AR,taper, x_over_c))**0.28))
+    
+def formfactor_fuselage (length_fuselage, diameter_fuselage):
+		f = lenght_fuselage/diameter_fuselage
+    return 1+ 60/(f*f*f) + f/400
+    
+def formfactor_nacelle(length_nacelle, diameter_nacelle):
+    return 1 + 0.35*length_nacelle/diameter_nacelle
+    
+def fuselage_upsweep(upsweep, A_max):
+		
+    
+CD0_ = (1/Sref)*Cf_components*formfactor*interference*Swetted + CD_misc
+
 
