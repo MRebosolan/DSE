@@ -136,18 +136,41 @@ def turbulent (re, M):
 
 
 def formfactor_wing (t_over_c, x_over_c, M, quarter_sweep, AR,taper):
-		return (1+ 0.6*t_over_c/x_over_c+ 100*(t_over_c**4)) * (1.34*(M**0.18)*(cos(any_sweep(quarter_sweep, AR,taper, x_over_c))**0.28))
+	return (1+ 0.6*t_over_c/x_over_c+ 100*(t_over_c**4)) * (1.34*(M**0.18)*(cos(any_sweep(quarter_sweep, AR,taper, x_over_c))**0.28))
     
 def formfactor_fuselage (length_fuselage, diameter_fuselage):
-		f = lenght_fuselage/diameter_fuselage
-    return 1+ 60/(f*f*f) + f/400
-    
+    f = length_fuselage/diameter_fuselage
+    return (1+ 60/(f*f*f) + f/400)
+
+
 def formfactor_nacelle(length_nacelle, diameter_nacelle):
     return 1 + 0.35*length_nacelle/diameter_nacelle
     
-def fuselage_upsweep(upsweep, A_max):
-		
+def fuselage_misc(upsweep, A_max, A_base,M):
+    drag_over_mu_upsweep = 3.83*A_max*upsweep**2.5
+    drag_over_mu_base = A_base *(0.139+0.419*(M-0.161)**2)
+    return drag_over_mu_upsweep, drag_over_mu_base
+
+def excrescence (CD0, factor): #typically 1.02-1.05 for transport
+    return CD0*factor
+
+def tc_streamwise(t_over_c, quarter_sweep):
+    return t_over_c*cos(radians(quarter_sweep))
+
+def Mdd (t_over_c, CL, quarter_sweep, kappa = 0.935):
+    sweepcos = cos(radians(quarter_sweep))
+    tc_stream = tc_streamwise(t_over_c, quarter_sweep)
     
-CD0_ = (1/Sref)*Cf_components*formfactor*interference*Swetted + CD_misc
+    Mdd = kappa/sweepcos - tc_stream/(sweepcos*sweepcos) - CL / (10 *sweepcos**3)
+    return Mdd
+
+def wave(M, t_over_c, CL, quarter_sweep, kappa = 0.935):
+    M_dd = Mdd(t_over_c, CL, quarter_sweep, kappa = 0.935)
+    if M > M_dd:
+        return (M-M_dd)*0.1
+    elif M <= M_dd:
+        return 0.002
+    
+# CD0_ = (1/Sref)*Cf_components*formfactor*interference*Swetted + CD_misc
 
 
