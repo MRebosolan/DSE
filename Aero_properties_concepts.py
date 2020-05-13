@@ -110,7 +110,7 @@ def induced_drag(CL, AR, e):
 
 
 
-#conventional config
+
 CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
 LEsweep = LE_sweep(quarter_sweep, AR, taper)
 e = oswald_factor(LEsweep, AR)
