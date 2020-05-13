@@ -9,6 +9,8 @@ W_start_cruise_crj = 31537 * g
 W_end_cruise_crj = 28337 * g
 taper_crj = 0.4
 S_crj = 70.6 #crj
+M_crj = 0.78
+altitude_crj = 10000
 
 quarter_sweep = 25
 wingspan = 24
@@ -109,6 +111,8 @@ def CLclmax (quarter_sweep, AR, taper):
 
           
 q = dynamic_pressure(M, altitude)
+
+q_crj = dynamic_pressure(M_crj, altitude_crj)
 
 
 CL,cl = CLdes(q,W_start_cruise,W_end_cruise,S,quarter_sweep)
