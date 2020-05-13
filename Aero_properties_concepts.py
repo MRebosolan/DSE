@@ -120,4 +120,19 @@ cf = 0.003
 ke = 0.5*(np.pi*e/cf)**0.5
 Emax = ke*(AR/Swet_Sw)**0.5
 Cd0 = np.pi*AR*e/(4*Emax*Emax)
-   
+
+T, P, rho, a = atmosphere_calculator(altitude)
+q = 0.5 * rho * a**2 * M**2
+
+def oswald_factor(LE_sweep, AR):
+    if LE_sweep < 5:
+        return 1.78 * (1 - 0.045 * AR**0.68) - 0.64
+    else:
+        return 4.61 * (1 - 0.045 * AR**0.68) * (cos(LE_sweep))**0.15 - 3.1
+def induced_drag(CL, AR, e):
+    return CL**2 / (math.pi * AR * e)
+CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
+LEsweep = LE_sweep(quarter_sweep, AR, taper)
+e = oswald_factor(LEsweep, AR)
+CD_induced = induced_drag(CL, AR, e)
+print(CL, AR, e, CD_induced)
