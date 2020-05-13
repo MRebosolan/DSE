@@ -113,3 +113,11 @@ crjCL, crjcl = CLdes(q,W_start_cruise_crj,W_end_cruise_crj,S_crj,quarter_sweep_c
 CL_alpha = CL_alpha (AR, M, half_sweep, taper )
 
 #jetfuelcantmeltsteelbeams
+Swet_Sw = 5.6
+e = 0.85
+cf = 0.003
+
+ke = 0.5*(np.pi*e/cf)**0.5
+Emax = ke*(AR/Swet_Sw)**0.5
+Cd0 = np.pi*AR*e/(4*Emax*Emax)
+   
