@@ -175,6 +175,25 @@ def wave(M, t_over_c, CL, quarter_sweep, kappa = 0.935):
     elif M <= M_dd:
         return 0.002
     
+    
+def wetted_fuselage(diameter, length):
+    circumference = np.pi*diameter
+    area = length*circumference
+    return area
+    
+def wetted_wing():
+    return
+diameter = 4.24 #m
+length = 32.3 #m
+
+Swet_Sw = 5.6
+e = 0.85
+cf = 0.003
+
+ke = 0.5*(np.pi*e/cf)**0.5
+Emax = ke*(AR/Swet_Sw)**0.5
+Cd0 = np.pi*AR*e/(4*Emax*Emax)
+    
 # CD0_ = (1/Sref)*Cf_components*formfactor*interference*Swetted + CD_misc
 
 
