@@ -35,9 +35,6 @@ def atmosphere_calculator(h):
     a = (1.4*287*T)**0.5
     return (T,P,rho,a)
 
-T, P, rho, a = atmosphere_calculator(altitude)
-q = 0.5 * rho * a**2 * M**2
-
 
 def CLdes(q,W_start_cruise,W_end_cruise,S,sweep): #finds design cruise CL for aircraft and airfoil
     CL = 1.1/q * (0.5 * (W_start_cruise/S + W_end_cruise/S))
@@ -99,20 +96,18 @@ def datcom( quarter_sweep = quarter_sweep, AR = AR, taper = taper):
         datcom = 'high'
     return datcom, a, AR
 
-def oswald_factor(LE_sweep, AR):
-    if LE_sweep < 5:
-        return 1.78 * (1 - 0.045 * AR**0.68) - 0.64
-    else:
-        return 4.61 * (1 - 0.045 * AR**0.68) * (cos(LE_sweep))**0.15 - 3.1
-
-def induced_drag(CL, AR, e):
-    return CL**2 / (math.pi * AR * e)
 
 
+# def CLclmax (quarter_sweep, AR, taper, delta_y):
+    
+          
+q = dynamic_pressure(M, altitude)
 
 
-CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
-LEsweep = LE_sweep(quarter_sweep, AR, taper)
-e = oswald_factor(LEsweep, AR)
-CD_induced = induced_drag(CL, AR, e)
-print(CL, AR, e, CD_induced)
+CL,cl = CLdes(q,W_start_cruise,W_end_cruise,S,quarter_sweep)
+
+
+
+crjCL, crjcl = CLdes(q,W_start_cruise_crj,W_end_cruise_crj,S_crj,quarter_sweep_crj)
+
+CL_alpha = CL_alpha (AR, M, half_sweep, taper )
