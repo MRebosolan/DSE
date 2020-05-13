@@ -111,3 +111,5 @@ CL,cl = CLdes(q,W_start_cruise,W_end_cruise,S,quarter_sweep)
 crjCL, crjcl = CLdes(q,W_start_cruise_crj,W_end_cruise_crj,S_crj,quarter_sweep_crj)
 
 CL_alpha = CL_alpha (AR, M, half_sweep, taper )
+
+#jetfuelcantmeltsteelbeams
