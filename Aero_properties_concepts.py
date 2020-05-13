@@ -131,16 +131,13 @@ def reynolds (rho, V, l, mu, k): #subsonic
     adapted = 38.21*((l/k)**1.053)
     return min(std,adapted)
 
-re = reynolds(rho,V,l,mu,k)
-
-####### Skin friction coeficient
 def laminar_friction(re):
     return 1.328/(math.sqrt(re))
 
 def turbulent (re, M):
-    lower = ((math.log(re))**2.58) *(1 + 0.144 * M**2)**0.65
+    lower = ((math.log(re))**2.58) *(1 + 0.144 * M*M)**0.65
     return 0.455/lower
-##########
+
 
 def formfactor_wing (t_over_c, x_over_c, M, quarter_sweep, AR,taper):
 	return (1+ 0.6*t_over_c/x_over_c+ 100*(t_over_c**4)) * (1.34*(M**0.18)*(cos(any_sweep(quarter_sweep, AR,taper, x_over_c))**0.28))
@@ -177,6 +174,25 @@ def wave(M, t_over_c, CL, quarter_sweep, kappa = 0.935):
         return (M-M_dd)*0.1
     elif M <= M_dd:
         return 0.002
+    
+    
+def wetted_fuselage(diameter, length):
+    circumference = np.pi*diameter
+    area = length*circumference
+    return area
+    
+def wetted_wing():
+    return
+diameter = 4.24 #m
+length = 32.3 #m
+
+Swet_Sw = 5.6
+e = 0.85
+cf = 0.003
+
+ke = 0.5*(np.pi*e/cf)**0.5
+Emax = ke*(AR/Swet_Sw)**0.5
+Cd0 = np.pi*AR*e/(4*Emax*Emax)
     
 # CD0_ = (1/Sref)*Cf_components*formfactor*interference*Swetted + CD_misc
 
