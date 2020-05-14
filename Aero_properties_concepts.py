@@ -17,7 +17,7 @@ AR = wingspan**2 /S
 t_over_w = 0.4423
 thrust = t_over_w*W_start_cruise
 
-altitude = 10000
+altitude = 11000
 M = 0.8
 
 
