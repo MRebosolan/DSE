@@ -23,6 +23,11 @@ M = 0.8
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+=======
+range = 2000
+
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
+<<<<<<< HEAD
 Swet_Sw = 5.6
 e = 0.85
 cf = 0.003
@@ -32,13 +37,19 @@ Cd0 = np.pi*AR*e/(4*Emax*Emax)
 =======
 >>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
 >>>>>>> 4af1c574d2446a0f73583648cdc495c13c4a16cd
+<<<<<<< HEAD
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
+=======
 >>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 
 Vstall = 63
 range = 2000
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 =======
 >>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 def atmosphere_calculator(h):
@@ -80,6 +91,7 @@ def any_sweep(quarter_sweep, AR,taper, chord_position):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 crjCL, crjcl = CLdes(q,W_start_cruise_crj,W_end_cruise_crj,S_crj,quarter_sweep_crj)
 
 CL_alpha = CL_alpha (AR, M, half_sweep, taper )
@@ -92,6 +104,8 @@ Emax = ke*(AR/Swet_Sw)**0.5
 Cd0 = np.pi*AR*e/(4*Emax*Emax)
 
 
+=======
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 =======
 >>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 T, P, rho, a = atmosphere_calculator(altitude)
@@ -131,11 +145,28 @@ D,CD = drag(V,rho,CL)
 cruise_energy = D*range*1000 #Joules
 impulse = D*range*1000/V
 cruise_power = D*V
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 
 
 
 
+alt = 0
+t = 0
+impulse = 0
+altlist = []
+thrustlist = []
+v_list = []
+drag_list = []
+climb_list = []
+powerlist =[]
+energy = 0
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 # for alt in range(altitude):
 #     T,P,rho,a = atmosphere_calculator(altitude)
@@ -200,6 +231,28 @@ while alt < altitude and t < 1800:
     CD_opt = CDS[drags.index(min(drags))]
     CL_opt = CLS[drags.index(min(drags))]
     
+=======
+while alt < altitude and t < 1800:
+    
+    start = 80
+    speeds = np.arange(start, 220, 1)
+    drags = []
+    CDS = []
+    CLS = []
+    for V in speeds:
+        T,P,rho,a = atmosphere_calculator(alt)
+        CL = 2*W_start_cruise / (rho*S*V*V)
+        D, CD = drag(V,rho, CL)
+        drags.append(D)
+        CDS.append(CD)
+        CLS.append(CL)
+        
+    D_min = min(drags)
+    V_opt = start + drags.index(min(drags))
+    CD_opt = CDS[drags.index(min(drags))]
+    CL_opt = CLS[drags.index(min(drags))]
+    
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
     thrust_alt = thrust * (P/101325) * (288.15/T)**0.5
     thrust_reduced = thrust_alt *.9
     climbrate = (thrust_reduced-D_min)*V_opt/W_start_cruise
@@ -235,6 +288,7 @@ plt.grid()
 #     half_sweep = half_sweep(quarter_sweep, AR, taper)
 #     x = math.sqrt(4+((AR*b/eff)**2)*(1+ (math.tan(radians(half_sweep)))**2)/(b**2))
 #     return 2*np.pi*AR/(2+x)
+<<<<<<< HEAD
 
 # def datcom( quarter_sweep = quarter_sweep, AR = AR, taper = taper):
 #     c1 = c1_(taper)
@@ -252,6 +306,25 @@ plt.grid()
 # def approxCLmax (clmax, quarter_sweep = quarter_sweep):
 #     return 0.9 * clmax *radians(quarter_sweep)
 
+=======
+
+# def datcom( quarter_sweep = quarter_sweep, AR = AR, taper = taper):
+#     c1 = c1_(taper)
+#     LEsweep = any_sweep(quarter_sweep, AR,taper, 0.25)
+#     a = 4/((c1+1)*cos(LEsweep))
+#     if a > AR:
+#         print("low aspect ratio datcom method")
+#         datcom = "low"
+#     elif a < AR:
+#         print("high aspect ratio datcom method")
+#         datcom = 'high'
+#     return datcom, a, AR
+
+<<<<<<< HEAD
+# def approxCLmax (clmax, quarter_sweep = quarter_sweep):
+#     return 0.9 * clmax *radians(quarter_sweep)
+
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
 # def c1_(taper):
 #     return  -4.2447*taper**4 +12.611*taper**3 - 12.8418 * taper**2 +4.50475*taper
 
@@ -276,4 +349,7 @@ plt.grid()
 =======
 >>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
 >>>>>>> 4af1c574d2446a0f73583648cdc495c13c4a16cd
+<<<<<<< HEAD
+>>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
+=======
 >>>>>>> 8e10be0795901ef5f968ff3cb666b4a6340f22ea
