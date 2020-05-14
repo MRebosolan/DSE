@@ -20,9 +20,9 @@ S = 70.6 #crj
 wing_twist = -3 #degrees
 AR = wingspan**2 /S
 
-altitude = 11000
+altitude = 10000
 M = 0.8
-
+Vstall = 63
 
 
 #fuckthepolice
@@ -135,4 +135,6 @@ CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
 LEsweep = LE_sweep(quarter_sweep, AR, taper)
 e = oswald_factor(LEsweep, AR)
 CD_induced = induced_drag(CL, AR, e)
-print(CL, AR, e, CD_induced)
+
+D_tot = q*S*(Cd0+(CL)**2/(np.pi*AR*e))
+Cd1= Cd0+(CL)**2/(np.pi*AR*e)
