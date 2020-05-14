@@ -19,14 +19,21 @@ thrust = t_over_w*W_start_cruise
 
 altitude = 10000
 M = 0.8
+<<<<<<< HEAD
+Vstall = 63
+=======
 range = 2000
 
+<<<<<<< HEAD
 Swet_Sw = 5.6
 e = 0.85
 cf = 0.003
 ke = 0.5*(np.pi*e/cf)**0.5
 Emax = ke*(AR/Swet_Sw)**0.5
 Cd0 = np.pi*AR*e/(4*Emax*Emax)
+=======
+>>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
+>>>>>>> 4af1c574d2446a0f73583648cdc495c13c4a16cd
 
 
 def atmosphere_calculator(h):
@@ -83,6 +90,11 @@ CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
 LEsweep = LE_sweep(quarter_sweep, AR, taper)
 e = oswald_factor(LEsweep, AR)
 CD_induced = induced_drag(CL, AR, e)
+<<<<<<< HEAD
+
+D_tot = q*S*(Cd0+(CL)**2/(np.pi*AR*e))
+Cd1= Cd0+(CL)**2/(np.pi*AR*e)
+=======
 print(CL, AR, e, CD_induced)
 
 T,P,rho,a = atmosphere_calculator(altitude)
@@ -184,6 +196,7 @@ plt.grid()
 #         datcom = 'high'
 #     return datcom, a, AR
 
+<<<<<<< HEAD
 # def approxCLmax (clmax, quarter_sweep = quarter_sweep):
 #     return 0.9 * clmax *radians(quarter_sweep)
 
@@ -208,3 +221,6 @@ plt.grid()
 # W_end_cruise_crj = 28337 * g
 # taper_crj = 0.4
 # S_crj = 70.6 #crj
+=======
+>>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
+>>>>>>> 4af1c574d2446a0f73583648cdc495c13c4a16cd
