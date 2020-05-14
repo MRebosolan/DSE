@@ -19,10 +19,17 @@ taper = 0.4
 S = 70.6 #crj
 wing_twist = -3 #degrees
 AR = wingspan**2 /S
+t_over_w = 0.4423
+thrust = t_over_w*W_start_cruise
 
-altitude = 11000
+altitude = 10000
 M = 0.8
+<<<<<<< HEAD
+Vstall = 63
+=======
+range = 2000
 
+>>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
 
 
 #fuckthepolice
@@ -116,10 +123,10 @@ CL_alpha = CL_alpha (AR, M, half_sweep, taper )
 Swet_Sw = 5.6
 e = 0.85
 cf = 0.003
-
 ke = 0.5*(np.pi*e/cf)**0.5
 Emax = ke*(AR/Swet_Sw)**0.5
 Cd0 = np.pi*AR*e/(4*Emax*Emax)
+
 
 T, P, rho, a = atmosphere_calculator(altitude)
 q = 0.5 * rho * a**2 * M**2
@@ -135,4 +142,64 @@ CL = CLdes(q, W_start_cruise, W_end_cruise, S, quarter_sweep)[0]
 LEsweep = LE_sweep(quarter_sweep, AR, taper)
 e = oswald_factor(LEsweep, AR)
 CD_induced = induced_drag(CL, AR, e)
+<<<<<<< HEAD
+
+D_tot = q*S*(Cd0+(CL)**2/(np.pi*AR*e))
+Cd1= Cd0+(CL)**2/(np.pi*AR*e)
+=======
 print(CL, AR, e, CD_induced)
+
+T,P,rho,a = atmosphere_calculator(altitude)
+V = M * a
+
+def drag(V, rho, Cl, S = S, Cd0 = Cd0, AR = AR, e = e):
+    
+    CD = Cd0+ induced_drag(Cl, AR, e)
+    D = 0.5*rho*V*V*S*CD
+    return D, CD
+
+
+# cruise_energy = D*range*1000 #Joules
+# impulse = D*range*1000/V
+# cruise_power = D*V
+
+
+
+
+
+# for alt in range(altitude):
+#     T,P,rho,a = atmosphere_calculator(altitude)
+    
+#     drag, CD = drag(V,rho)
+#     CL = 2*W_start_cruise / (rho*S*V*V)
+start = 50
+speeds = np.arange(start, 250, 1)
+drags = []
+CDS = []
+CLS = []
+for V in speeds:
+    T,P,rho,a = atmosphere_calculator(10000)
+    CL = 2*W_start_cruise / (rho*S*V*V)
+    D, CD = drag(V,rho, CL)
+    drags.append(D)
+    CDS.append(CD)
+    CLS.append(CL)
+    
+D_min = min(drags)
+V_opt = start + drags.index(min(drags))
+CD_opt = CDS[drags.index(min(drags))]
+CL_opt = CLS[drags.index(min(drags))]
+
+climbrate = (thrust-D_min)*V_opt/W_start_cruise
+climbrate_fpm = climbrate*60/0.3048
+    
+    
+    
+
+
+
+
+
+
+
+>>>>>>> 59993b55bd286507ba28154676e27aacb5dd3277
